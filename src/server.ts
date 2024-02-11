@@ -2,16 +2,15 @@ import express from "express";
 import cors from "cors";
 import { Worker } from "bullmq";
 import { redisConnection } from "./services/redis";
+import { downloadS3Folder } from "./services/s3";
 
 const app = express();
 
 app.use(cors());
-
+downloadS3Folder("SKJ4d");
 const worker = new Worker(
   "build-queue",
   async (job) => {
-    // Will print { foo: 'bar'} for the first job
-    // and { qux: 'baz' } for the second.
     console.log("New job bitch come and do it ", job.data);
   },
   {
